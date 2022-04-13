@@ -1,5 +1,5 @@
 const User = require("../../models/User");
-
+const logger = require("../../logger/logger");
 module.exports = async (req, res) => {
   try {
     const loggedInUser = await User.findById(req.userId);
@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
     await userToFollow.save();
     return res.status(200).json({ message: "Followed" });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return res.status(500).json({ message: error.message });
   }
 };

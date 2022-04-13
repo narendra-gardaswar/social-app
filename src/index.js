@@ -1,36 +1,25 @@
 const express = require("express");
 const helmet = require("helmet");
+const logger = require("./logger/logger");
+const morgan = require("morgan");
 require("dotenv").config();
 const app = express();
 
 const databaseConn = require("./utils/databaseConn");
-const authentication = require("./routes/authentication");
+const auth = require("./routes/auth");
 
 /* Routes */
 const user = require("./routes/user");
 const post = require("./routes/post");
 
 /* Middlewares */
+app.use(morgan("combined"));
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/* Request and Response Logs */
-app.use((req, res, next) => {
-  console.log(
-    `Incoming Method->: [${req.method} - Url:[${req.originalUrl}] - IP:[${req.socket.remoteAddress}] `
-  );
-  res.on("finish", () => {
-    console.log(
-      `Outgoing Method->: [${req.method} - Url:[${req.originalUrl}] - IP:[${req.socket.remoteAddress}] - Status: [${res.statusCode}] `
-    );
-    console.log(" ");
-  });
-  next();
-});
-
 /* Routes */
-app.use("/auth", authentication);
+app.use("/auth", auth);
 app.use("/user", user);
 app.use("/post", post);
 
@@ -50,7 +39,7 @@ try {
   const startServer = async () => {
     await databaseConn();
     app.listen(process.env.SERVER_PORT || 5050, () => {
-      console.log(
+      logger.info(
         `Server Listening on Port ${process.env.SERVER_PORT || 5050}`
       );
       console.log(" ");
@@ -58,6 +47,6 @@ try {
   };
   startServer();
 } catch (error) {
-  console.log(error.message, "Server Connection Failed, Server shutting down");
+  logger.error(error.message, "Server Connection Failed, Server shutting down");
   process.exit(1);
 }

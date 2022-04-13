@@ -1,10 +1,10 @@
 const router = require("express").Router();
 
 /* Controllers */
-const signup = require("../controllers/authentication/signup");
-const login = require("../controllers/authentication/login");
-const logout = require("../controllers/authentication/logout");
-const changePassword = require("../controllers/authentication/changePassword");
+const signup = require("../controllers/auth/signup");
+const login = require("../controllers/auth/login");
+const logout = require("../controllers/auth/logout");
+const changePassword = require("../controllers/auth/changePassword");
 
 /* Middlewares */
 const {

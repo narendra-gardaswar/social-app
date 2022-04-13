@@ -1,20 +1,20 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
-
+const logger = require("../logger/logger");
 module.exports = async () => {
-  // console.log(mongoose.connection.readyState); //logs 0
+  // logger.info(mongoose.connection.readyState); //logs 0
   mongoose.connection.on("connecting", () => {
-    console.log("Connecting to Database..");
+    logger.info("Connecting to Database..");
   });
   // check database connection
   mongoose.connection.on("connected", async () => {
-    console.log("Database Connection Established");
+    logger.info("Database Connection Established");
   });
   mongoose.connection.on("disconnecting", () => {
-    console.log("Disconnecting Database.."); // logs 3
+    logger.warn("Disconnecting Database.."); // logs 3
   });
   mongoose.connection.on("disconnected", () => {
-    console.log("Disconnected from Database.."); //logs 0
+    logger.warn("Disconnected from Database.."); //logs 0
   });
 
   try {
