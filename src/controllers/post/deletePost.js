@@ -1,5 +1,6 @@
 const Post = require("../../models/Post");
 const User = require("../../models/User");
+const logger = require("../../logger/logger");
 /* Delete post */
 module.exports = async (req, res) => {
   try {
@@ -23,7 +24,7 @@ module.exports = async (req, res) => {
 
     return res.status(200).json({ message: "Post Deleted" });
   } catch (error) {
-    console.error(error);
+    logger.error(error.message);
     return res.status(500).json({ message: error.message });
   }
 };

@@ -1,4 +1,5 @@
 const User = require("../../models/User");
+const logger = require("../../logger/logger");
 /* Logout user*/
 module.exports = async (req, res) => {
   try {
@@ -20,7 +21,7 @@ module.exports = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error.message);
     return res.status(500).json({
       error: error.message,
     });

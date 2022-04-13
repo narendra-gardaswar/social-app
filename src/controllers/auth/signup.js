@@ -1,6 +1,7 @@
 const User = require("../../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const logger = require("../../logger/logger");
 require("dotenv").config();
 /* SignUp */
 module.exports = async (req, res) => {
@@ -35,8 +36,8 @@ module.exports = async (req, res) => {
       });
     }
     return res.status(500).json({ error: "Failed to Create Account" });
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    logger.error(error.message);
     return res.status(500).json({
       error: "Oops, Something went wrong. please try again",
     });

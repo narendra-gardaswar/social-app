@@ -1,6 +1,6 @@
 const Post = require("../../models/Post");
 const User = require("../../models/User");
-
+const logger = require("../../logger/logger");
 /* Create Post */
 module.exports = async (req, res) => {
   try {
@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
 
     return res.status(201).json({ message: "New Post added", id: post._id });
   } catch (error) {
-    console.error(error);
+    logger.error(error.message);
     return res.status(500).json({
       error: "Opps, Something went wrong. Please try again later",
     });

@@ -1,5 +1,6 @@
 const User = require("../../models/User");
 const bcrypt = require("bcrypt");
+const logger = require("../../logger/logger");
 /* change Password */
 module.exports = async (req, res) => {
   try {
@@ -30,7 +31,7 @@ module.exports = async (req, res) => {
     await user.save();
     return res.status(200).json({ message: "Password Changed Successfully" });
   } catch (error) {
-    console.error(error);
+    logger.error(error.message);
     return res.status(500).json({
       message: "Oops, Something went wrong. please try again later",
     });

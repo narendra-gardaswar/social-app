@@ -1,6 +1,7 @@
 const User = require("../../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const logger = require("../../logger/logger");
 require("dotenv").config();
 /* Login User */
 module.exports = async (req, res) => {
@@ -40,7 +41,7 @@ module.exports = async (req, res) => {
       message: "The password that you've entered is incorrect.",
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error.message);
     return res
       .status(500)
       .json({ message: "Oops, Something went wrong. please try again later" });
